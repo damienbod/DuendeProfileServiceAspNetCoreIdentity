@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 
@@ -12,19 +13,19 @@ public class ProfileService: IProfileService
         // context.Subject.Claims is the claims collection from the user's session cookie at login time
         // context.IssuedClaims is the collection of claims that your logic has decided to return in the response
 
-        if (context.Caller == "ClaimsProviderAccessToken")
+        if (context.Caller == IdentityServerConstants.ProfileDataCallers.ClaimsProviderIdentityToken)
         {
             // access_token
             context.IssuedClaims.Add(new Claim("testAT", "at"));
         }
 
-        if (context.Caller == "ClaimsProviderIdentityToken")
+        if (context.Caller == IdentityServerConstants.ProfileDataCallers.ClaimsProviderIdentityToken)
         {
             // id_token
             context.IssuedClaims.Add(new Claim("testId", "id"));
         }
 
-        if (context.Caller == "UserInfoEndpoint")
+        if (context.Caller == IdentityServerConstants.ProfileDataCallers.UserInfoEndpoint)
         {
             // user_info endpoint
 			context.IssuedClaims.Add(new Claim("testUserInfo", "userinfo"));

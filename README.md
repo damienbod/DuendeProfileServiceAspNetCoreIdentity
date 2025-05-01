@@ -21,6 +21,8 @@ Update-Database
 
 ## Links
 
+https://docs.duendesoftware.com/identityserver/reference/services/profile-service
+
 https://duendesoftware.com/products/identityserver
 
 https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity

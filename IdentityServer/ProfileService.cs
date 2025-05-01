@@ -13,7 +13,7 @@ public class ProfileService: IProfileService
         // context.Subject.Claims is the claims collection from the user's session cookie at login time
         // context.IssuedClaims is the collection of claims that your logic has decided to return in the response
 
-        if (context.Caller == IdentityServerConstants.ProfileDataCallers.ClaimsProviderIdentityToken)
+        if (context.Caller == IdentityServerConstants.ProfileDataCallers.ClaimsProviderAccessToken)
         {
             // access_token
             context.IssuedClaims.Add(new Claim("testAT", "at"));

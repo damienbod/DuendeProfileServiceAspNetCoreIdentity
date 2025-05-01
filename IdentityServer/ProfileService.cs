@@ -14,13 +14,20 @@ public class ProfileService: IProfileService
 
         if (context.Caller == "ClaimsProviderAccessToken")
         {
-            // AT
+            // access_token
+            context.IssuedClaims.Add(new Claim("testAT", "at"));
         }
 
-        // Add userinfo endpoint claims
+        if (context.Caller == "ClaimsProviderIdentityToken")
+        {
+            // id_token
+            context.IssuedClaims.Add(new Claim("testId", "id"));
+        }
+
         if (context.Caller == "UserInfoEndpoint")
         {
-			context.IssuedClaims.Add(new Claim("UserInfo", "userinfo"));
+            // user_info endpoint
+			context.IssuedClaims.Add(new Claim("testUserInfo", "userinfo"));
         }
 
         // ALL

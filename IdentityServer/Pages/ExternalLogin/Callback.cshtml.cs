@@ -39,7 +39,7 @@ public class Callback : PageModel
     public async Task<IActionResult> OnGet()
     {
         // read external identity from the temporary cookie
-        var result = await HttpContext.AuthenticateAsync("entraidscheme");
+        var result = await HttpContext.AuthenticateAsync("externalscheme");
         if (result.Succeeded != true)
         {
             throw new InvalidOperationException($"External authentication error: {result.Failure}");
@@ -86,7 +86,7 @@ public class Callback : PageModel
         await _signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
         // delete temporary cookie used during external authentication
-        await HttpContext.SignOutAsync("entraidscheme");
+        await HttpContext.SignOutAsync("externalscheme");
 
         // retrieve return URL
         var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";

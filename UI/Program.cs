@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
+using Microsoft.AspNetCore.Authentication;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication(options =>
@@ -31,6 +32,9 @@ builder.Services.AddAuthentication(options =>
 
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
+
+    options.ClaimActions.MapUniqueJsonKey("testUserInfo", "testUserInfo");
+    options.ClaimActions.MapUniqueJsonKey("test", "test");
 });
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()

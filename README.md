@@ -26,3 +26,5 @@ https://docs.duendesoftware.com/identityserver/reference/services/profile-servic
 https://duendesoftware.com/products/identityserver
 
 https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity
+
+https://learn.microsoft.com/en-us/aspnet/core/security/authentication/claims

@@ -1,8 +1,10 @@
 using Duende.IdentityServer;
 using DuendeProfileServiceAspNetCoreIdentity.Data;
 using DuendeProfileServiceAspNetCoreIdentity.Models;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using Serilog;
 
 namespace DuendeProfileServiceAspNetCoreIdentity;
@@ -35,6 +37,26 @@ internal static class HostingExtensions
             .AddLicenseSummary()
             .AddProfileService<ProfileService>();
 
+        builder.Services.AddDistributedMemoryCache();
+
+        builder.Services.AddAuthentication()
+            .AddMicrosoftIdentityWebApp(options =>
+            {
+                builder.Configuration.Bind("AzureAd", options);
+                options.SignInScheme = "entraidcookie";
+                options.UsePkce = true;
+                options.Events = new OpenIdConnectEvents
+                {
+                    OnTokenResponseReceived = context =>
+                    {
+                        var idToken = context.TokenEndpointResponse.IdToken;
+                        return Task.CompletedTask;
+                    }
+                };
+            }, copt => { }, "EntraID", "entraidcookie", false, "Entra ID")
+            .EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
+            .AddMicrosoftGraph()
+            .AddDistributedTokenCaches();
 
         return builder.Build();
     }

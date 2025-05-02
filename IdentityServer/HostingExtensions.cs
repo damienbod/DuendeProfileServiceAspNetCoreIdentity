@@ -106,6 +106,7 @@ internal static class HostingExtensions
                         // Set the audience query parameter to the API identifier to ensure the returned Access Tokens can be used
                         // to call protected endpoints on the corresponding API.
                         context.ProtocolMessage.SetParameter("audience", "https://auth0-api1");
+                        context.ProtocolMessage.AcrValues = "http://schemas.openid.net/pape/policies/2007/06/multi-factor";
 
                         return Task.FromResult(0);
                     }

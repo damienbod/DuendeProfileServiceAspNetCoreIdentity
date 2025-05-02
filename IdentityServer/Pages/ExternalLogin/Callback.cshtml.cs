@@ -80,6 +80,10 @@ public class Callback : PageModel
         // this is typically used to store data needed for signout from those protocols.
         var additionalLocalClaims = new List<Claim>();
         var localSignInProps = new AuthenticationProperties();
+
+        var oid = GetOid(externalUser.Claims);
+        additionalLocalClaims.Add(new Claim("oid", oid.ToString()!));
+
         CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
         // issue authentication cookie for user
@@ -196,5 +200,20 @@ public class Callback : PageModel
         {
             localSignInProps.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = idToken } });
         }
+    }
+
+    public static Guid? GetOid(IEnumerable<Claim> claims)
+    {
+        // oid if magic MS namespaces not user
+        var oid = claims.FirstOrDefault(t => t.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+
+        if (oid != null)
+        {
+            return Guid.TryParse(oid.Value, out var oidGuid) ? oidGuid : null;
+        }
+
+        oid = claims.FirstOrDefault(t => t.Type == "oid");
+
+        return Guid.TryParse(oid?.Value, out var oidGuid2) ? oidGuid2 : null;
     }
 }

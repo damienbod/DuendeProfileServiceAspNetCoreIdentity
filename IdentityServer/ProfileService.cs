@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -22,13 +23,24 @@ public class ProfileService: IProfileService
         if (context.Caller == IdentityServerConstants.ProfileDataCallers.ClaimsProviderIdentityToken)
         {
             // id_token
-            context.IssuedClaims.Add(new Claim("testId", "id"));
+
+            var oid = context.Subject.Claims.FirstOrDefault(t => t.Type == "oid");
+
+            if(oid != null)
+            {
+                context.IssuedClaims.Add(new Claim("oid", oid.Value));
+            }
         }
 
         if (context.Caller == IdentityServerConstants.ProfileDataCallers.UserInfoEndpoint)
         {
             // user_info endpoint
-			context.IssuedClaims.Add(new Claim("testUserInfo", "userinfo"));
+            var oid = context.Subject.Claims.FirstOrDefault(t => t.Type == "oid");
+
+            if (oid != null)
+            {
+                context.IssuedClaims.Add(new Claim("oid", oid.Value));
+            }
         }
 
         // ALL

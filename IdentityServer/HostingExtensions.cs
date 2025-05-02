@@ -40,11 +40,18 @@ internal static class HostingExtensions
 
         builder.Services.AddDistributedMemoryCache();
 
-        builder.Services.AddAuthentication()
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        })
             .AddMicrosoftIdentityWebApp(options =>
             {
                 builder.Configuration.Bind("AzureAd", options);
-                options.SignInScheme = "entraidcookie";
+                options.SignInScheme = "entraidscheme";
+                options.SignOutScheme = IdentityConstants.ApplicationScheme;
+
                 options.UsePkce = true;
                 options.Events = new OpenIdConnectEvents
                 {
@@ -54,13 +61,13 @@ internal static class HostingExtensions
                         return Task.CompletedTask;
                     }
                 };
-            }, copt => { }, "EntraID", "entraidcookie", false, "Entra ID")
+            }, copt => { }, "EntraID", "entraidscheme", false, "Entra ID")
             .EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
             .AddMicrosoftGraph()
             .AddDistributedTokenCaches();
 
         builder.Services.AddRazorPages()
-         .AddMicrosoftIdentityUI();
+            .AddMicrosoftIdentityUI();
 
         return builder.Build();
     }

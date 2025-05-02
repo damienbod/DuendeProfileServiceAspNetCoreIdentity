@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using Serilog;
 
 namespace DuendeProfileServiceAspNetCoreIdentity;
@@ -57,6 +58,9 @@ internal static class HostingExtensions
             .EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
             .AddMicrosoftGraph()
             .AddDistributedTokenCaches();
+
+        builder.Services.AddRazorPages()
+         .AddMicrosoftIdentityUI();
 
         return builder.Build();
     }

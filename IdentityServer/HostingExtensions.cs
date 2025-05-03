@@ -139,8 +139,8 @@ internal static class HostingExtensions
                 oidcOptions.SaveTokens = true;
                 oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
                 oidcOptions.TokenValidationParameters.RoleClaimType = "role";
-
             });
+            // This code creates it own scheme and so does not fit well into identity and external authentication
             //.AddMicrosoftIdentityWebApp(options =>
             //{
             //    builder.Configuration.Bind("AzureAd", options);

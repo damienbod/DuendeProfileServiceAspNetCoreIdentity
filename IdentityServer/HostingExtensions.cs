@@ -52,9 +52,9 @@ internal static class HostingExtensions
             {
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 options.SignOutScheme = IdentityConstants.ApplicationScheme;
-                options.CallbackPath = "/signin-oidc-auth0";
-                options.RemoteSignOutPath = "/signout-callback-oidc-auth0";
-                options.SignedOutCallbackPath = "/signout-oidc-auth0";
+                options.CallbackPath = new PathString("/signin-oidc-auth0");
+                options.RemoteSignOutPath = new PathString("/signout-callback-oidc-auth0");
+                options.SignedOutCallbackPath = new PathString("/signout-oidc-auth0");
 
                 options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
                 options.ClientId = builder.Configuration["Auth0:ClientId"];
@@ -65,7 +65,7 @@ internal static class HostingExtensions
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
                 options.Scope.Add("auth0-user-api-one");
-                // options.CallbackPath = new PathString("/signin-oidc");
+                
                 options.ClaimsIssuer = "Auth0";
                 options.SaveTokens = true;
                 options.UsePkce = true;
@@ -124,9 +124,9 @@ internal static class HostingExtensions
                 oidcOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 oidcOptions.SignOutScheme = IdentityConstants.ApplicationScheme;
 
-                oidcOptions.CallbackPath = "/signin-oidc";
-                oidcOptions.RemoteSignOutPath = "/signout-callback-oidc";
-                oidcOptions.SignedOutCallbackPath = "/signout-oidc";
+                oidcOptions.CallbackPath = new PathString("/signin-oidc");
+                oidcOptions.RemoteSignOutPath = new PathString("/signout-callback-oidc");
+                oidcOptions.SignedOutCallbackPath = new PathString("/signout-oidc");
 
                 oidcOptions.Scope.Add(OpenIdConnectScope.OpenIdProfile);
                 oidcOptions.Scope.Add("user.read");

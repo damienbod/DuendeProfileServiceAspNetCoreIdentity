@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
 
@@ -47,9 +48,9 @@ internal static class HostingExtensions
             options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
         })
-            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, "Auth0", options =>
+            .AddOpenIdConnect("Auth0Scheme", "Auth0", options =>
             {
-                options.SignInScheme = "externalscheme";
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 options.SignOutScheme = IdentityConstants.ApplicationScheme;
                 options.CallbackPath = "/signin-oidc-auth0";
                 options.RemoteSignOutPath = "/signout-callback-oidc-auth0";
@@ -117,35 +118,58 @@ internal static class HostingExtensions
                     }
                 };
             })
-            .AddMicrosoftIdentityWebApp(options =>
+            .AddOpenIdConnect("EntraID", "EntraID", oidcOptions =>
             {
-                builder.Configuration.Bind("AzureAd", options);
-                options.SignInScheme = "externalscheme";
-                options.SignOutScheme = IdentityConstants.ApplicationScheme;
+                builder.Configuration.Bind("AzureAd", oidcOptions);
+                oidcOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                oidcOptions.SignOutScheme = IdentityConstants.ApplicationScheme;
 
-                options.CallbackPath = "/signin-oidc";
-                options.RemoteSignOutPath = "/signout-callback-oidc";
-                options.SignedOutCallbackPath = "/signout-oidc";
+                oidcOptions.CallbackPath = "/signin-oidc";
+                oidcOptions.RemoteSignOutPath = "/signout-callback-oidc";
+                oidcOptions.SignedOutCallbackPath = "/signout-oidc";
 
-                options.MapInboundClaims = false;
-                options.UsePkce = true;
-                options.Events = new OpenIdConnectEvents
-                {
-                    OnRedirectToIdentityProvider = context =>
-                    {
-                        context.ProtocolMessage.AcrValues = "http://schemas.openid.net/pape/policies/2007/06/multi-factor";
-                        return Task.FromResult(0);
-                    },
-                    OnTokenResponseReceived = context =>
-                    {
-                        var idToken = context.TokenEndpointResponse.IdToken;
-                        return Task.CompletedTask;
-                    }
-                };
-            }, copt => { }, "EntraID", "externalscheme", false, "Entra ID")
-            .EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
-            .AddMicrosoftGraph()
-            .AddDistributedTokenCaches();
+                oidcOptions.Scope.Add(OpenIdConnectScope.OpenIdProfile);
+                oidcOptions.Scope.Add("user.read");
+                oidcOptions.Scope.Add(OpenIdConnectScope.OfflineAccess);
+                oidcOptions.Authority = $"https://login.microsoftonline.com/{builder.Configuration["AzureAd:TenantId"]}/v2.0/";
+                oidcOptions.ClientId = builder.Configuration["AzureAd:ClientId"];
+                oidcOptions.ClientSecret = builder.Configuration["AzureAd:ClientSecret"];
+                oidcOptions.ResponseType = OpenIdConnectResponseType.Code;
+                oidcOptions.MapInboundClaims = false;
+                oidcOptions.SaveTokens = true;
+                oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
+                oidcOptions.TokenValidationParameters.RoleClaimType = "role";
+
+            });
+            //.AddMicrosoftIdentityWebApp(options =>
+            //{
+            //    builder.Configuration.Bind("AzureAd", options);
+            //    options.SignInScheme = "mscreatedscheme"; // you would need to add this to the callback an the logout
+            //    options.SignOutScheme = IdentityConstants.ApplicationScheme;
+            //
+            //    options.CallbackPath = "/signin-oidc";
+            //    options.RemoteSignOutPath = "/signout-callback-oidc";
+            //    options.SignedOutCallbackPath = "/signout-oidc";
+            //
+            //    options.MapInboundClaims = false;
+            //    options.UsePkce = true;
+            //    options.Events = new OpenIdConnectEvents
+            //    {
+            //        OnRedirectToIdentityProvider = context =>
+            //        {
+            //            context.ProtocolMessage.AcrValues = "http://schemas.openid.net/pape/policies/2007/06/multi-factor";
+            //            return Task.FromResult(0);
+            //        },
+            //        OnTokenResponseReceived = context =>
+            //        {
+            //            var idToken = context.TokenEndpointResponse.IdToken;
+            //            return Task.CompletedTask;
+            //        }
+            //    };
+            //}, copt => { }, "EntraID", "mscreatedscheme", false, "Entra ID")
+            //.EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
+            //.AddMicrosoftGraph()
+            //.AddDistributedTokenCaches();
 
         builder.Services.AddRazorPages()
             .AddMicrosoftIdentityUI();

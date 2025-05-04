@@ -30,3 +30,5 @@ https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity
 https://learn.microsoft.com/en-us/aspnet/core/security/authentication/claims
 
 https://github.com/damienbod/MulitipleClientClaimsMapping
+
+https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/

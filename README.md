@@ -19,6 +19,10 @@ Add-Migration "InitIdentityNew" -c ApplicationDbContext
 Update-Database
 ```
 
+## History
+
+2025-05-04 Initial version
+
 ## Links
 
 https://docs.duendesoftware.com/identityserver/reference/services/profile-service

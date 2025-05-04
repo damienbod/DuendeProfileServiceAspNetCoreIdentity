@@ -1,5 +1,7 @@
 # Duende ProfileService ASP.NET Core Identity
 
+[![.NET](https://github.com/damienbod/DuendeProfileServiceAspNetCoreIdentity/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DuendeProfileServiceAspNetCoreIdentity/actions/workflows/dotnet.yml)
+
 ## Setup
 
 The application is used as an identity provider. This can be used for local users or for external users using OpenID connect federation. All applications using the application are separated from the further authentication systems. By using Duende, it is possible to use the high end OAuth an OpenID Connect authentication flows which are not supported by other identity providers. It would also be possible to use OpenIddict in this setup. The users of the server authenticate using OpenID Connect. The claims need to be mapped as well as each of the external authentication providers. The Identity Callback UI is used to handle all of the external authentication flow results. The claims from each external authentication are different and need to be mapped to the claims used in the closed system.

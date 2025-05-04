@@ -1,6 +1,8 @@
 # Duende ProfileService ASP.NET Core Identity
 
-## 
+## Setup
+
+![ASP.NET Core Identity](https://github.com/damienbod/DuendeProfileServiceAspNetCoreIdentity/blob/main/images/overview.drawio.png)
 
 ```
 dotnet new install Duende.IdentityServer.Templates

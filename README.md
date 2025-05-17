@@ -16,7 +16,6 @@ dotnet new install Duende.IdentityServer.Templates
 dotnet new isaspid  
 ```
 
-
 ## Create Migrations directly
 
 ```

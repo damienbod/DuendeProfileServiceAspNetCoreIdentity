@@ -2,7 +2,7 @@
 
 [![.NET](https://github.com/damienbod/DuendeProfileServiceAspNetCoreIdentity/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DuendeProfileServiceAspNetCoreIdentity/actions/workflows/dotnet.yml)
 
-[Using multiple external identity providers from ASP.NET Core Identity and Duende IdentityServer](https://damienbod.com)
+[Using multiple external identity providers from ASP.NET Core Identity and Duende IdentityServer](https://damienbod.com/2025/05/19/using-multiple-external-identity-providers-from-asp-net-core-identity-and-duende-identityserver/)
 
 ## Setup
 

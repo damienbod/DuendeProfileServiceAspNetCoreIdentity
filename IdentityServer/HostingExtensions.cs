@@ -4,8 +4,6 @@ using DuendeProfileServiceAspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
@@ -140,39 +138,39 @@ internal static class HostingExtensions
                 oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
                 oidcOptions.TokenValidationParameters.RoleClaimType = "role";
             });
-            // This code creates it own scheme and so does not fit well into identity and external authentication
-            //.AddMicrosoftIdentityWebApp(options =>
-            //{
-            //    builder.Configuration.Bind("AzureAd", options);
-            //    options.SignInScheme = "mscreatedscheme"; // you would need to add this to the callback an the logout
-            //    options.SignOutScheme = IdentityConstants.ApplicationScheme;
-            //
-            //    options.CallbackPath = "/signin-oidc";
-            //    options.RemoteSignOutPath = "/signout-callback-oidc";
-            //    options.SignedOutCallbackPath = "/signout-oidc";
-            //
-            //    options.MapInboundClaims = false;
-            //    options.UsePkce = true;
-            //    options.Events = new OpenIdConnectEvents
-            //    {
-            //        OnRedirectToIdentityProvider = context =>
-            //        {
-            //            context.ProtocolMessage.AcrValues = "http://schemas.openid.net/pape/policies/2007/06/multi-factor";
-            //            return Task.FromResult(0);
-            //        },
-            //        OnTokenResponseReceived = context =>
-            //        {
-            //            var idToken = context.TokenEndpointResponse.IdToken;
-            //            return Task.CompletedTask;
-            //        }
-            //    };
-            //}, copt => { }, "EntraID", "mscreatedscheme", false, "Entra ID")
-            //.EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
-            //.AddMicrosoftGraph()
-            //.AddDistributedTokenCaches();
+        // This code creates it own scheme and so does not fit well into identity and external authentication
+        //.AddMicrosoftIdentityWebApp(options =>
+        //{
+        //    builder.Configuration.Bind("AzureAd", options);
+        //    options.SignInScheme = "mscreatedscheme"; // you would need to add this to the callback an the logout
+        //    options.SignOutScheme = IdentityConstants.ApplicationScheme;
+        //
+        //    options.CallbackPath = "/signin-oidc";
+        //    options.RemoteSignOutPath = "/signout-callback-oidc";
+        //    options.SignedOutCallbackPath = "/signout-oidc";
+        //
+        //    options.MapInboundClaims = false;
+        //    options.UsePkce = true;
+        //    options.Events = new OpenIdConnectEvents
+        //    {
+        //        OnRedirectToIdentityProvider = context =>
+        //        {
+        //            context.ProtocolMessage.AcrValues = "http://schemas.openid.net/pape/policies/2007/06/multi-factor";
+        //            return Task.FromResult(0);
+        //        },
+        //        OnTokenResponseReceived = context =>
+        //        {
+        //            var idToken = context.TokenEndpointResponse.IdToken;
+        //            return Task.CompletedTask;
+        //        }
+        //    };
+        //}, copt => { }, "EntraID", "mscreatedscheme", false, "Entra ID")
+        //.EnableTokenAcquisitionToCallDownstreamApi(["User.Read"])
+        //.AddMicrosoftGraph()
+        //.AddDistributedTokenCaches();
 
-        builder.Services.AddRazorPages()
-            .AddMicrosoftIdentityUI();
+        builder.Services.AddRazorPages();
+           // .AddMicrosoftIdentityUI();
 
         return builder.Build();
     }

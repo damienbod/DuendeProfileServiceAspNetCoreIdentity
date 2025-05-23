@@ -145,8 +145,9 @@ internal static class HostingExtensions
                     var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
                     logger.LogInformation("OnMessageReceived from identity provider. Scheme: {Scheme: }", context.Scheme.Name);
 
-                    context.HandleResponse();
-                    context.Response.Redirect($"/Home/Test");
+                    // for testing purposes only
+                    //context.HandleResponse();
+                    //context.Response.Redirect($"/Home/Test");
                     await Task.CompletedTask;
                 },
             };

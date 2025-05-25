@@ -7,14 +7,15 @@ namespace UI.Pages.ResetCache;
 [AllowAnonymous]
 public class Index : PageModel
 {
-    public IActionResult OnGet(string? errorId)
+    public IActionResult OnGet()
     {
-        // clear cache if needed
+        // clear the cookie cache
         foreach (var cookie in Request.Cookies.Keys)
         {
             Response.Cookies.Delete(cookie);
         }
 
+        // Force a sign-in
         return Redirect("/");
     }
 }

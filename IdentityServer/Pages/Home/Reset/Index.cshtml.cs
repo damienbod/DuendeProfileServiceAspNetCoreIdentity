@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,18 +21,30 @@ public class Index : PageModel
         _environment = environment;
     }
 
-    public async Task OnGet(string? errorId)
+    public async Task OnGet(string? errorId, string? remoteError)
     {
-        // retrieve error details from identity server
-        var message = await _interaction.GetErrorContextAsync(errorId);
-        if (message != null)
+        if (remoteError != null)
         {
-            View.Error = message;
-
-            if (!_environment.IsDevelopment())
+            View.Error = new ErrorMessage
             {
-                // only show in development
-                message.ErrorDescription = null;
+                Error = "Remote authentication error",
+                ErrorDescription = remoteError
+            };
+        }
+        else
+        {
+            // retrieve error details from identity server
+            var message = await _interaction.GetErrorContextAsync(errorId);
+
+            if (message != null)
+            {
+                View.Error = message;
+
+                if (!_environment.IsDevelopment())
+                {
+                    // only show in development
+                    message.ErrorDescription = null;
+                }
             }
         }
     }

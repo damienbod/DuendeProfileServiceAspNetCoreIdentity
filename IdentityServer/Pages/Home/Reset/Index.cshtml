@@ -1,5 +1,5 @@
 @page
-@model DuendeProfileServiceAspNetCoreIdentity.Pages.Test.Index
+@model DuendeProfileServiceAspNetCoreIdentity.Pages.Reset.Index
 
 <div class="error-page">
     <div class="lead">
@@ -8,8 +8,8 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <div class="alert alert-danger">
-                Sorry, there was an error
+            <div class="alert alert-warning">
+                Reset local cookies
 
                 @if (Model.View.Error != null)
                 {
@@ -35,5 +35,5 @@
 </div>
 
 <form method="post">
-    <input type="submit" name="Reset">
+    <input type="submit" class="btn btn-warning" name="Reset">
 </form>

@@ -147,7 +147,7 @@ internal static class HostingExtensions
 
                     // for testing purposes only
                     //context.HandleResponse();
-                    //context.Response.Redirect($"/Home/Test");
+                    //context.Response.Redirect($"/Home/Reset");
                     await Task.CompletedTask;
                 },
             };

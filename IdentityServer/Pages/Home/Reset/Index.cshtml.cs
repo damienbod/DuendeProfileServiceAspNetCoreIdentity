@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DuendeProfileServiceAspNetCoreIdentity.Pages.Test;
+namespace DuendeProfileServiceAspNetCoreIdentity.Pages.Reset;
 
 [AllowAnonymous]
 [SecurityHeaders]
@@ -22,7 +22,7 @@ public class Index : PageModel
 
     public async Task OnGet(string? errorId)
     {
-        // retrieve error details from identityserver
+        // retrieve error details from identity server
         var message = await _interaction.GetErrorContextAsync(errorId);
         if (message != null)
         {
@@ -44,6 +44,7 @@ public class Index : PageModel
             Response.Cookies.Delete(cookie);
         }
 
+        // bubble up to a UI application if required
         return Redirect("https://localhost:5015/resetcache");
     }
 }

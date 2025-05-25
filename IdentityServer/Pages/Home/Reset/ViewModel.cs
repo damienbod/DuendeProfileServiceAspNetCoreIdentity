@@ -1,6 +1,6 @@
 using Duende.IdentityServer.Models;
 
-namespace DuendeProfileServiceAspNetCoreIdentity.Pages.Test;
+namespace DuendeProfileServiceAspNetCoreIdentity.Pages.Reset;
 
 public class ViewModel
 {

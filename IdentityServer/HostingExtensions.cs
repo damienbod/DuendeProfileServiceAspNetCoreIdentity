@@ -137,6 +137,36 @@ internal static class HostingExtensions
             oidcOptions.SaveTokens = true;
             oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
             oidcOptions.TokenValidationParameters.RoleClaimType = "role";
+
+            oidcOptions.Events = new OpenIdConnectEvents
+            {
+                OnMessageReceived = async context =>
+                {
+                    var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogInformation("OnMessageReceived from identity provider. Scheme: {Scheme: }", context.Scheme.Name);
+
+                    // for testing purposes only
+                    //context.HandleResponse();
+                    //context.Response.Redirect($"/Home/Reset");
+                    await Task.CompletedTask;
+                },
+                OnRemoteFailure = async context =>
+                {
+                    var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogInformation("OnRemoteFailure from identity provider. Scheme: {Scheme: }", context.Scheme.Name);
+
+                    if (context.Failure != null)
+                    {
+                        //server_error
+                        context.HandleResponse();
+                        context.Response.Redirect($"/Home/Reset?remoteError={context.Failure.Message}");
+                        
+                        //context.Response.Redirect($"/Error?remoteError={context.Failure.Message}");
+                    }
+
+                    await Task.CompletedTask;
+                }
+            };
         });
         // This code creates it own scheme and so does not fit well into identity and external authentication
         //.AddMicrosoftIdentityWebApp(options =>

@@ -1,0 +1,39 @@
+@page
+@model DuendeProfileServiceAspNetCoreIdentity.Pages.Reset.Index
+
+<div class="error-page">
+    <div class="lead">
+        <h1>Reset Cookies</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="alert alert-warning">
+                Reset local cookies
+
+                @if (Model.View.Error != null)
+                {
+                    <strong>
+                        <em>
+                            : @Model.View.Error.Error
+                        </em>
+                    </strong>
+
+                    if (Model.View.Error.ErrorDescription != null)
+                    {
+                        <div>@Model.View.Error.ErrorDescription</div>
+                    }
+                }
+            </div>
+
+            @if (Model?.View?.Error?.RequestId != null)
+            {
+                <div class="request-id">Request Id: @Model.View.Error.RequestId</div>
+            }
+        </div>
+    </div>
+</div>
+
+<form method="post">
+    <input type="submit" class="btn btn-warning" name="Reset">
+</form>

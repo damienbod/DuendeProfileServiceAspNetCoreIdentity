@@ -30,6 +30,7 @@ Update-Database
 
 ## History
 
+- 2025-08-18 Updated packages
 - 2025-05-17 Updated packages
 - 2025-05-04 Initial version
 

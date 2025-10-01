@@ -1,3 +1,5 @@
 /.vs/
 **/bin/
 **/obj/
+/IdentityServer/keys/**
+/IdentityServer.slnLaunch.user

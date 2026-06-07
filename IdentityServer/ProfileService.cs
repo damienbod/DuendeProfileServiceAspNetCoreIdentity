@@ -7,8 +7,8 @@ namespace DuendeProfileServiceAspNetCoreIdentity;
 
 public class ProfileService: IProfileService
 {
-	public async Task GetProfileDataAsync(ProfileDataRequestContext context)
-	{
+    public Task GetProfileDataAsync(ProfileDataRequestContext context, CancellationToken ct)
+    {
         // context.Subject is the user for whom the result is being made
         // context.Subject.Claims is the claims collection from the user's session cookie at login time
         // context.IssuedClaims is the collection of claims that your logic has decided to return in the response
@@ -51,11 +51,11 @@ public class ProfileService: IProfileService
 
 		}
 
-        return;
-	}
+        return Task.CompletedTask;
+    }
 
-	public Task IsActiveAsync(IsActiveContext context)
-	{
+    public Task IsActiveAsync(IsActiveContext context, CancellationToken ct)
+    {
 		context.IsActive = true;
 		return Task.CompletedTask;
 	}

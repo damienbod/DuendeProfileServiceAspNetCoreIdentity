@@ -1,24 +1,26 @@
-using System.Reflection;
 using Duende.IdentityServer;
+using Duende.IdentityServer.Licensing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection;
 
 namespace DuendeProfileServiceAspNetCoreIdentity.Pages.Home;
 
 [AllowAnonymous]
 public class Index : PageModel
 {
-    public Index(IdentityServerLicense? license = null)
+    private readonly LicenseInformation _license;
+
+    public Index(LicenseInformation license)
     {
-        License = license;
+        _license = license;
     }
 
-    public string Version
+    public void OnGet()
     {
-        get => typeof(Duende.IdentityServer.Hosting.IdentityServerMiddleware).Assembly
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion.Split('+').First()
-            ?? "unavailable";
+        if (_license.IsConfigured)
+        {
+            // licensed behavior
+        }
     }
-    public IdentityServerLicense? License { get; }
 }

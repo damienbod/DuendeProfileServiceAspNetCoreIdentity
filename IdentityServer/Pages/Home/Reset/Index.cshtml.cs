@@ -34,7 +34,7 @@ public class Index : PageModel
         else
         {
             // retrieve error details from identity server
-            var message = await _interaction.GetErrorContextAsync(errorId);
+            var message = await _interaction.GetErrorContextAsync(errorId, HttpContext.RequestAborted);
 
             if (message != null)
             {

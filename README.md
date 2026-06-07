@@ -30,6 +30,7 @@ Update-Database
 
 ## History
 
+- 2026-06-07 Updated packages, Duende 8.0.0
 - 2026-05-14 Updated packages
 - 2026-03-15 Updated packages
 - 2026-02-25 Updated packages

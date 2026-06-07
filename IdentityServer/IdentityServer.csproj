@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" version="7.4.7" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" version="8.0.0" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.8" />
 
@@ -23,9 +23,9 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-    <PackageReference Include="Microsoft.Identity.Web" Version="4.9.0" />
-    <PackageReference Include="Microsoft.Identity.Web.GraphServiceClient" Version="4.9.0" />
-    <PackageReference Include="Microsoft.Identity.Web.UI" Version="4.9.0" />
-    <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="4.9.0" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="4.10.0" />
+    <PackageReference Include="Microsoft.Identity.Web.GraphServiceClient" Version="4.10.0" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="4.10.0" />
+    <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="4.10.0" />
 	</ItemGroup>
 </Project>
